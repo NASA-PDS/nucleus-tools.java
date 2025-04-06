@@ -87,6 +87,10 @@ public class PDSNucleusS3BackLogProcessor {
                 .region(awsRegion)
                 .build();
 
+        if (s3BucketPrefix.equals("None")) {
+            s3BucketPrefix = "";
+        }
+
         ListObjectsV2Request listObjectsReqManual = ListObjectsV2Request.builder()
                 .bucket(s3BucketName)
                 .prefix(s3BucketPrefix)

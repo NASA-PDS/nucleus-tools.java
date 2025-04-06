@@ -60,6 +60,10 @@ public class PDSNucleusS3BackLogProcessor {
         String sqsQueueURL =  System.getenv("SQS_QUEUE_URL");
         Region awsRegion = Region.of(System.getenv("AWS_REGION"));
 
+        if (s3BucketPrefix.equals("None")) {
+            s3BucketPrefix = "";
+        }
+
         logger.setLevel(Level.FINE);
         logger.info("s3BucketName = " + s3BucketName);
         logger.info("s3BucketPrefix = " + s3BucketPrefix);
@@ -86,10 +90,6 @@ public class PDSNucleusS3BackLogProcessor {
         SqsClient sqsClient = SqsClient.builder()
                 .region(awsRegion)
                 .build();
-
-        if (s3BucketPrefix.equals("None")) {
-            s3BucketPrefix = "";
-        }
 
         ListObjectsV2Request listObjectsReqManual = ListObjectsV2Request.builder()
                 .bucket(s3BucketName)

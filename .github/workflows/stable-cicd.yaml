@@ -75,13 +75,44 @@ jobs:
                 uses: NASA-PDS/roundup-action@stable
                 with:
                     assembly: stable
+                    maven-doc-phases: package
+                    # TODO: Remove
+                    maven-stable-artifact-phases: clean,install,deploy
                     packages: openjdk17-jdk
                 env:
                     ossrh_username: ${{secrets.OSSRH_USERNAME}}
                     ossrh_password: ${{secrets.OSSRH_PASSWORD}}
                     CODE_SIGNING_KEY: ${{secrets.CODE_SIGNING_KEY}}
                     ADMIN_GITHUB_TOKEN: ${{secrets.ADMIN_GITHUB_TOKEN}}
+            -
+                name: 🫙 Jar and Tag Determination
+                id: jartag
+                run: |
+                    echo "jar_file=$(find ./target/ -maxdepth 1 -regextype posix-extended -regex '.*/nucleus-tools-[0-9]+\.[0-9]+\.[0-9]+(-SNAPSHOT-jar-with-dependencies)?\.jar')" >> $GITHUB_OUTPUT
+                    echo "image_tag=$(echo ${{github.ref}} | awk -F/ '{print $NF}')" >> $GITHUB_OUTPUT
+            -
+                name: 💳 Docker Hub Identification
+                uses: docker/login-action@v3
+                with:
+                    username: ${{secrets.DOCKERHUB_USERNAME}}
+                    password: ${{secrets.DOCKERHUB_TOKEN}}
+            -
+                name: 🎰 QEMU Multiple Machine Emulation
+                uses: docker/setup-qemu-action@v3
+            -
+                name: 🚢 Docker Buildx
+                uses: docker/setup-buildx-action@v3
+            -
+                name: 🧱 Image Construction and Publication
+                uses: docker/build-push-action@v6
+                with:
+                    context: ./
+                    file: ./docker/Dockerfile
+                    build-args: api_jar=${{steps.jartag.outputs.jar_file}}
+                    platforms: linux/amd64,linux/arm64
+                    push: true
+                    tags: ${{secrets.DOCKERHUB_USERNAME}}/nucleus-tools.java:${{steps.jartag.outputs.image_tag}}
 
-...
+
 
 # -*- mode: yaml; indent: 4; fill-column: 120; coding: utf-8 -*-

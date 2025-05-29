@@ -135,7 +135,7 @@ POSSIBILITY OF SUCH DAMAGE.
                     </archive>
                 </configuration>
             </plugin>
-
+            <!-- Commenting out this assembly for time being to see if this is the problem for stable deployment
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
@@ -148,6 +148,9 @@ POSSIBILITY OF SUCH DAMAGE.
                         </manifest>
                     </archive>
                 </configuration>
+                <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
                 <executions>
                     <execution>
                         <id>assemble-all</id>
@@ -158,6 +161,7 @@ POSSIBILITY OF SUCH DAMAGE.
                     </execution>
                 </executions>
             </plugin>
+            -->
 
             <plugin>
               <groupId>org.codehaus.mojo</groupId>

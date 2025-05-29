@@ -141,12 +141,11 @@ POSSIBILITY OF SUCH DAMAGE.
                 <configuration>
                     <archive>
                         <manifest>
+                            <mainClass>gov.nasa.pds.nucleus.ingress.PDSNucleusS3BackLogProcessor</mainClass>
+                            <addClasspath>true</addClasspath>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                         </manifest>
-                        <manifestEntries>
-                            <Main-Class>gov.nasa.pds.nucleus.ingress.PDSNucleusS3BackLogProcessor</Main-Class>
-                        </manifestEntries>
                     </archive>
                 </configuration>
                 <executions>
@@ -159,34 +158,60 @@ POSSIBILITY OF SUCH DAMAGE.
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>buildnumber-maven-plugin</artifactId>
+              <version>3.2.1</version>
+              <executions>
+                <execution>
+                  <phase>validate</phase>
+                  <goals>
+                    <goal>create</goal>
+                  </goals>
+                </execution>
+              </executions>
+              <configuration>
+                <revisionOnScmFailure>unknownbuild</revisionOnScmFailure>
+                <format>{0,date,yyyy-MM-dd HH:mm:ss}</format>
+                <items>
+                  <item>timestamp</item>
+                </items>
+                <doCheck>false</doCheck>
+                <doUpdate>false</doUpdate>
+              </configuration>
+            </plugin>
             
             <!-- Build the site -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>4.0.0-M16</version>
+                <version>4.0.0-M13</version>
                 <configuration>
                     <skip>false</skip>  <!-- This is `true` in parent pom -->
                     <skipDeploy>false</skipDeploy>  <!-- This is `true` in parent pom -->
                 </configuration>
             </plugin>
             
-            <!-- Need this for Maven central requirements -->
-             <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-source-plugin</artifactId>
-                  <version>3.2.0</version>
-                  <executions>
-                      <execution>
-                          <id>attach-sources</id>
-                          <phase>prepare-package</phase>
-                          <goals>
-                              <goal>jar</goal>
-                              <goal>test-jar</goal>
-                          </goals>
-                      </execution>
-                  </executions>
-              </plugin>
+            <!-- Add maven source for maven central deployment -->
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-source-plugin</artifactId>
+              <version>3.3.1</version>
+              <executions>
+                <execution>
+                  <id>make-source-jar</id>
+                  <phase>prepare-package</phase>
+                  <goals>
+                    <goal>jar-no-fork</goal>
+                    <goal>test-jar-no-fork</goal>
+                  </goals>
+                  <configuration>
+                    <excludeResources>true</excludeResources>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
         </plugins>
     </build>
 

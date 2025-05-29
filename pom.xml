@@ -148,9 +148,6 @@ POSSIBILITY OF SUCH DAMAGE.
                             <Main-Class>gov.nasa.pds.nucleus.ingress.PDSNucleusS3BackLogProcessor</Main-Class>
                         </manifestEntries>
                     </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
                 </configuration>
                 <executions>
                     <execution>

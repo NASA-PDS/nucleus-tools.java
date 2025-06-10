@@ -144,22 +144,10 @@ POSSIBILITY OF SUCH DAMAGE.
                     </archive>
                 </configuration>
             </plugin>
-            <!-- Commenting out this assembly for time being to see if this is the problem for stable deployment
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>gov.nasa.pds.nucleus.ingress.PDSNucleusS3BackLogProcessor</mainClass>
-                            <addClasspath>true</addClasspath>
-                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                        </manifest>
-                    </archive>
-                </configuration>
-                <descriptorRefs>
-                    <descriptorRef>jar-with-dependencies</descriptorRef>
-                </descriptorRefs>
+                <version>3.6.0</version>
                 <executions>
                     <execution>
                         <id>assemble-all</id>
@@ -167,32 +155,43 @@ POSSIBILITY OF SUCH DAMAGE.
                         <goals>
                             <goal>single</goal>
                         </goals>
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <archive>
+                                <manifest>
+                                    <mainClass>gov.nasa.pds.nucleus.ingress.PDSNucleusS3BackLogProcessor</mainClass>
+                                    <addClasspath>true</addClasspath>
+                                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                    <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                                </manifest>
+                            </archive>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
-            -->
-
             <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>buildnumber-maven-plugin</artifactId>
-              <version>3.2.1</version>
-              <executions>
-                <execution>
-                  <phase>validate</phase>
-                  <goals>
-                    <goal>create</goal>
-                  </goals>
-                </execution>
-              </executions>
-              <configuration>
-                <revisionOnScmFailure>unknownbuild</revisionOnScmFailure>
-                <format>{0,date,yyyy-MM-dd HH:mm:ss}</format>
-                <items>
-                  <item>timestamp</item>
-                </items>
-                <doCheck>false</doCheck>
-                <doUpdate>false</doUpdate>
-              </configuration>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <revisionOnScmFailure>unknownbuild</revisionOnScmFailure>
+                    <format>{0,date,yyyy-MM-dd HH:mm:ss}</format>
+                    <items>
+                        <item>timestamp</item>
+                    </items>
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
+                </configuration>
             </plugin>
             
             <!-- Build the site -->

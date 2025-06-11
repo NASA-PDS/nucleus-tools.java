@@ -34,10 +34,12 @@ ENV S3_BUCKET_NAME=""
 ENV S3_BUCKET_PREFIX=""
 ENV AWS_REGION=""
 ENV SQS_QUEUE_URL=""
+ENV MAIN_CLASS="gov.nasa.pds.nucleus.ingress.PDSNucleusS3BackLogProcessor"
 
 ARG nucleus_tools_jar
-RUN echo "nucleus_tools_jar is: $nucleus_tools_jar"
 
-COPY $nucleus_tools_jar /app.jar
+RUN echo "nucleus_tools_jar is: ${nucleus_tools_jar}"
 
-ENTRYPOINT ["java","-jar","/app.jar"]
+COPY ${nucleus_tools_jar} /app.jar
+
+ENTRYPOINT ["java", "-jar", "/app.jar $MAIN_CLASS"]

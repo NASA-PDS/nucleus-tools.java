@@ -35,5 +35,9 @@ ENV S3_BUCKET_PREFIX=""
 ENV AWS_REGION=""
 ENV SQS_QUEUE_URL=""
 
-COPY ../target/nucleus-tools-1.0-SNAPSHOT-jar-with-dependencies.jar app.jar
+ARG nucleus_tools_jar
+RUN echo "nucleus_tools_jar is: $nucleus_tools_jar"
+
+COPY $nucleus_tools_jar /app.jar
+
 ENTRYPOINT ["java","-jar","/app.jar"]

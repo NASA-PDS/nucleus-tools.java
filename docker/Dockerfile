@@ -42,4 +42,5 @@ RUN echo "nucleus_tools_jar is: ${nucleus_tools_jar}"
 
 COPY ${nucleus_tools_jar} /app.jar
 
-ENTRYPOINT ["java", "-jar", "/app.jar $MAIN_CLASS"]
+ENTRYPOINT java -cp /app.jar $MAIN_CLASS
+

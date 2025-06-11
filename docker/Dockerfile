@@ -28,7 +28,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-FROM openjdk:17-oracle
+FROM openjdk:18-oracle
 
 ARG nucleus_tools_jar
 COPY ${nucleus_tools_jar} /app.jar

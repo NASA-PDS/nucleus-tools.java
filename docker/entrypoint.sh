@@ -1,3 +1,4 @@
+#!/bin/sh
 # Copyright 2025, California Institute of Technology ("Caltech").
 # U.S. Government sponsorship acknowledged.
 #
@@ -28,14 +29,16 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-FROM openjdk:17-oracle
+# List of required environment variables
+REQUIRED_VARS="MAINCLASS S3_BUCKET_NAME S3_BUCKET_PREFIX AWS_REGION SQS_QUEUE_URL"
 
-ARG nucleus_tools_jar
-COPY ${nucleus_tools_jar} /app.jar
+# Check if each variable is set
+for var in $REQUIRED_VARS; do
+  if [ -z "$(eval echo \$$var)" ]; then
+    echo "Environment variable $var is not set."
+    exit 1
+  fi
+done
 
-# Add wrapper script
-COPY docker/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
-
+# Run the Java application with dynamically assigned main class
+exec java -cp /app.jar "$MAINCLASS"

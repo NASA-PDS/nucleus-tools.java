@@ -111,8 +111,9 @@ jobs:
                     build-args: nucleus_tools_jar=${{steps.jartag.outputs.jar_file}}
                     platforms: linux/amd64,linux/arm64
                     push: true
-                    tags: ${{secrets.DOCKERHUB_USERNAME}}/nucleus-tools-java:${{steps.jartag.outputs.image_tag}}
-
+                    tags: |
+                        ${{secrets.DOCKERHUB_USERNAME}}/nucleus-tools-java:${{steps.jartag.outputs.image_tag}}
+                        ${{secrets.DOCKERHUB_USERNAME}}/nucleus-tools-java:latest
 
 
 # -*- mode: yaml; indent: 4; fill-column: 120; coding: utf-8 -*-

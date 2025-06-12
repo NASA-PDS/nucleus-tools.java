@@ -1,5 +1,13 @@
 # Changelog
 
+## [release/0.0.26](https://github.com/NASA-PDS/nucleus-tools-java/tree/release/0.0.26) (2025-06-12)
+
+[Full Changelog](https://github.com/NASA-PDS/nucleus-tools-java/compare/v0.0.25...release/0.0.26)
+
+## [v0.0.25](https://github.com/NASA-PDS/nucleus-tools-java/tree/v0.0.25) (2025-06-11)
+
+[Full Changelog](https://github.com/NASA-PDS/nucleus-tools-java/compare/release/0.0.25...v0.0.25)
+
 ## [release/0.0.25](https://github.com/NASA-PDS/nucleus-tools-java/tree/release/0.0.25) (2025-06-11)
 
 [Full Changelog](https://github.com/NASA-PDS/nucleus-tools-java/compare/v0.0.24...release/0.0.25)
